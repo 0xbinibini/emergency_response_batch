@@ -54,7 +54,7 @@
 
 0. <font color=green>[查杀批处理](#1)</font>
 
-![image-20210910142318432](C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20210910142318432.png)
+![image-20210910142318432](./.assets/image-20210910142318432.png)
 
 <a name="1">介绍</a>
 
@@ -80,7 +80,7 @@ ps:已实验的都是亲自拿虚拟机在本地用病毒样本运行过的
 * 其他 远控僵尸网络木马等
   * 3601(僵尸网络木马dll劫持利用)
 
-![image-20210910142336418](C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20210910142336418.png)
+![image-20210910142336418](./.assets/image-20210910142336418.png)
 
 [`: 一键关闭高危端口横向传播](#2)
 
@@ -88,7 +88,7 @@ ps:已实验的都是亲自拿虚拟机在本地用病毒样本运行过的
 
 自定义规则填写介绍
 
-![image-20210910155801185](C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20210910155801185.png)
+![image-20210910155801185](./.assets/image-20210910155801185.png)
 
 > 结束计划任务1(有注释不执行)
 >
@@ -102,7 +102,7 @@ ps:已实验的都是亲自拿虚拟机在本地用病毒样本运行过的
 
 <a name=2>一键关闭高危端口批处理</a>
 
-![image-20210910161924862](C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20210910161924862.png)
+![image-20210910161924862](.assets/image-20210910161924862.png)
 
 1. 禁止135 137 138 139 445(tcp) 137 138(UDP)端口 默认使用IPSEC安全策略 选择可以自行切换到使用wf.msc高级安全防火墙策略来完成封禁
 2. 业务需要或处理完成后打开封禁的端口
