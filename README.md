@@ -111,16 +111,18 @@ ps:已实验的都是亲自拿虚拟机在本地用病毒样本运行过的
 
 ## 项目目录介绍
 
-<font color=blue>"$.debug"</font> 													调试目录
-<font color=blue>".his"</font>					 										历史文件夹
-<font color=red>"auto_temp.cmd"</font>								   	可直接自动运行某种类型的木马查杀批处理				
-"choice.exe"												为了兼容win2003的选择的命令行默认程序
-"forfiles.exe"										   	为了兼容win2003的遍历目录的命令行默认程序
-<font color=red>"killvir1.0.cmd"</font>									   	查杀功能批处理脚本
-<font color=blue>"log"</font>														 	批处理运行时的所有日志记录
-<font color=blue>"vir"</font>														 	自定义查杀规则存放目录
-"wmicprocess.txt"							     	wmic process的所有列字段	
-<font color=red>"应急响应1.0.cmd"</font>									主功能批处理脚本
-<font color=red>"隔离-一键关闭高危端口choice版.bat"</font>	使用choice来实现选择式关闭高危端口的批处理
-<font color=red>"隔离-一键关闭高危端口set版-1.1.bat" </font>   处理高危端口的批处理
+路径|说明
+---|---
+<font color=blue>"$.debug"</font> 													|调试目录
+<font color=blue>".his"</font>|					 										历史文件夹
+<font color=red>"auto_temp.cmd"</font>			|					   	可直接自动运行某种类型的木马查杀批处理				
+"choice.exe"		|										为了兼容win2003的选择的命令行默认程序
+"forfiles.exe"				|						   	为了兼容win2003的遍历目录的命令行默认程序
+<font color=red>"killvir1.0.cmd"</font>		|							   	查杀功能批处理脚本
+<font color=blue>"log"</font>		|												 	批处理运行时的所有日志记录
+<font color=blue>"vir"</font>			|											 	自定义查杀规则存放目录
+"wmicprocess.txt"					|		     	wmic process的所有列字段	
+<font color=red>"应急响应1.0.cmd"</font>	|								主功能批处理脚本
+<font color=red>"隔离-一键关闭高危端口choice版.bat"</font>	|使用choice来实现选择式关闭高危端口的批处理
+<font color=red>"隔离-一键关闭高危端口set版-1.1.bat" </font>   |处理高危端口的批处理
 
