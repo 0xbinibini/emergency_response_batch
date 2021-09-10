@@ -1,0 +1,61 @@
+
+主机名:           A021228-NC06
+OS 名称:          Microsoft Windows 10 企业版
+OS 版本:          10.0.19043 暂缺 Build 19043
+OS 制造商:        Microsoft Corporation
+OS 配置:          成员工作站
+OS 构建类型:      Multiprocessor Free
+注册的所有人:     DESKTOP-QAX
+注册的组织:       暂缺
+产品 ID:          00329-00000-00003-AA324
+初始安装日期:     2021/5/9, 22:13:49
+系统启动时间:     2021/8/2, 18:59:09
+系统制造商:       LENOVO
+系统型号:         20U2A1R0CD
+系统类型:         x64-based PC
+处理器:           安装了 1 个处理器。
+                  [01]: Intel64 Family 6 Model 142 Stepping 12 GenuineIntel ~1803 Mhz
+BIOS 版本:        LENOVO R17ET24W (1.07 ), 2020/10/12
+Windows 目录:     C:\WINDOWS
+系统目录:         C:\WINDOWS\system32
+启动设备:         \Device\HarddiskVolume1
+系统区域设置:     zh-cn;中文(中国)
+输入法区域设置:   zh-cn;中文(中国)
+时区:             (UTC+08:00) 北京，重庆，香港特别行政区，乌鲁木齐
+物理内存总量:     16,135 MB
+可用的物理内存:   1,757 MB
+虚拟内存: 最大值: 59,143 MB
+虚拟内存: 可用:   22,977 MB
+虚拟内存: 使用中: 36,166 MB
+页面文件位置:     D:\pagefile.sys
+域:               ESG.360ES.CN
+登录服务器:       \\A021228-NC06
+修补程序:         安装了 7 个修补程序。
+                  [01]: KB5003254
+                  [02]: KB4562830
+                  [03]: KB4577586
+                  [04]: KB4580325
+                  [05]: KB5000736
+                  [06]: KB5003173
+                  [07]: KB5003242
+网卡:             安装了 4 个 NIC。
+                  [01]: Gateway NC Adapter
+                      连接名:      以太网 3
+                      状态:        媒体连接已中断
+                  [02]: Intel(R) Ethernet Connection (10) I219-V
+                      连接名:      以太网 2
+                      状态:        媒体连接已中断
+                  [03]: Intel(R) Wi-Fi 6 AX200 160MHz
+                      连接名:      WLAN 2
+                      启用 DHCP:   是
+                      DHCP 服务器: 192.168.2.1
+                      IP 地址
+                        [01]: 192.168.2.159
+                        [02]: fe80::3cc5:4af5:a200:e1d0
+                  [04]: Bluetooth Device (Personal Area Network)
+                      连接名:      蓝牙网络连接 2
+                      状态:        媒体连接已中断
+Hyper-V 要求:     虚拟机监视器模式扩展: 是
+                  固件中已启用虚拟化: 是
+                  二级地址转换: 是
+                  数据执行保护可用: 是
