@@ -82,8 +82,8 @@ goto loop
 
 :6
 REM <----------------------------------敏感文件排查----------------------------------->
-start %WINDIR% 
-start %WINDIR%\tmp 
+start %WINDIR%
+start %WINDIR%\tmp
 start %WINDIR%\system32\
 start %TEMP%
 start %LOCALAPPDATA%
