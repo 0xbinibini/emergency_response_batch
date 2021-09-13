@@ -6,26 +6,27 @@
 
 * msinfo32、systeminfo等
   * todo
-    * 添加插件:调用热门的**基线检查工具**(查看未打补丁等)
+  
+  * [ ] 添加插件:调用热门的**基线检查工具**(查看未打补丁等)
 
 2. 检测计算机用户信息 
 
 * 当前用户 net user 、net localgroup wmic useraccount get name,sid、lusrmgr.msc、HKLM\SAM\SAM\Domains\Account\Users\Names(需要注册表SAM权限调整)
   * todo
-    * 添加插件:启动**D盾**工具直接查看是否有克隆账号
+  * [ ] 添加插件:启动**D盾**工具直接查看是否有克隆账号
 
 3. 网络链接与进程 
 
 * 任务管理器、进程服务列表、进程启动参数、网络链接列表
   * todo ps:<font color=red>现在已经有了一种能检测进程管理器来隐藏恶意进程的木马</font>
-    * 命令实现查看所有网络连接的进程名称与进程列表
-    * 添加插件:添加**火绒剑**来方便查看
+  * [ ] 命令实现查看所有网络连接的进程名称与进程列表
+  * [ ] 添加插件:添加**火绒剑**来方便查看
 
 4. 查看启动项与计划任务
 
 * msconfig、计划任务、计算机属性、ps显示计划任务、开始菜单自启动文件夹、bitsadmin自启动后门查看
   * todo
-    * 直接调用微软的autoruns来检查所有的自启动项
+  * [ ] 直接调用微软的autoruns来检查所有的自启动项
 
 5. 注册表项
 
@@ -35,13 +36,13 @@
 
 * %WINDIR%、%WINDIR%\tmp、%WINDIR%\system32\、%TEMP%、%LOCALAPPDATA%、%APPDATA%、%UserProfile%\Recent、%WINDIR%\Prefetch
   * todo
-    * forfiles命令实现查找一定范围的文件
+  * [ ] forfiles命令实现查找一定范围的文件
 
 7. 日志分析
 
 * %windir%\System32\winevt\Logs\、打开日志管理器eventvwr.msc
   * todo
-    * 加入一些外部的日志分析工具 eg:logparser(微软)、event log explorer (可视化分析工具)、观星平台(一键上传分析)
+  * [ ] 加入一些外部的日志分析工具 eg:logparser(微软)、event log explorer (可视化分析工具)、观星平台(一键上传分析)
 
 8. 扩展名关联项后门查看
 
