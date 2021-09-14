@@ -1,0 +1,193 @@
+<HTML>
+
+<HEAD><TITLE>Log Parser COM Input Format</TITLE></HEAD>
+
+<BODY BGCOLOR="#EFEFFF" LINK="#000000" VLINK="#606060" ALINK="#303030">
+
+<FONT SIZE="5"><B>COM Input Format</B></FONT><BR>
+
+<FONT SIZE="4">
+
+<P>
+The <TT>COM</TT> input format allows users to write their own input formats as COM objects, which can then be used with Log Parser through both the command-line application or through the scriptable COM components.<BR/>
+</P>
+
+There are two ways to write a COM plugin for Log Parser:<BR/>
+
+<P>
+<H3>Implementing the <I>ILogParserInputContext</I> interface:</H3>
+
+Your COM object must implement the <I>ILogParserInputContext</I> interface, whose declaration can be found in the <TT>COM\ILogParserInputContext.h</TT> file.<BR/>
+A sample COM object implementing the interface can be found in the <TT>Samples\COM\ProcessesInputContext</TT> folder.<BR/>
+This method usually requires writing C++ code or VB code.<BR>
+</P>
+
+<P>
+<H3>Implementing the <I>IDispatch</I> interface exposing the methods of the </I>ILogParserInputContext</I> interface:</H3>
+
+Your COM object must implement the <I>IDispatch</I> interface, and support the same methods exposed by the <I>ILogParserInputContext</I> interface.<BR/>
+A sample COM object implementing the <I>IDispatch</I> interface can be found in the <TT>Samples\COM\QFE</TT> folder.<BR/>
+This method usually requires writing scriptlets (.wsc) files in JScript or VBScript.<BR/>
+COM input format plugins that implement the <I>IDispatch</I> interface can also support custom properties.<BR/>
+</P>
+
+<HR/>
+
+After you have created your COM object, you will have to register it (usually using <I>regsvr32.exe</I>), and then it will be ready for use by Log Parser.<BR/>
+As an example, if your COM object's ProgID is &quot;<TT>MyLogParser.ComObject</TT>&quot;, you can use it by typing the following command:<BR/>
+<PRE>
+LogParser "SELECT * FROM MyFromEntity" -i:COM -iprogid:MyLogParser.ComObject
+</PRE>
+
+If your COM object also supports properties (<I>put_</I> only is enough), then you can set those properties through the command line as follows:<BR/>
+
+<PRE>
+LogParser "SELECT * FROM MyFromEntity" -i:COM -iprogid:MyLogParser.ComObject -icomparams:TargetMachine=localhost,ExtendedFields=on
+</PRE>
+
+<HR/>
+
+The order in which the <I>ILogParserInputContext</I> interface methods are called is as follows:
+
+<OL>
+<LI> OpenInput( szFromEntity )<BR/>
+	<FONT SIZE="+0">
+	<UL>
+		<LI><I>szFromEntity</I> contains the value specified in the <TT>FROM</TT> statement.</LI>
+		<LI>The implementation of this method could open the specified entity and eventually gather information about what fields to export to Log Parser.</LI>
+	</UL>
+	</FONT>
+</LI>
+<BR/>
+<LI> DWORD GetFieldCount( )<BR/>
+	<FONT SIZE="+0">
+	<UL>
+		<LI>The implementation of this method must return the total number of fields that the input format exports to Log Parser.</LI>
+	</UL>
+	</FONT>
+</LI>
+<BR/>
+<LI> BSTR GetFieldName( index )<BR/>
+	<FONT SIZE="+0">
+	<UL>
+		<LI>The implementation of this method must return the name of the field identified by the 0-based <I>index</I> argument.</LI>
+		<LI>This method is called as many times as the number of fields declared by the <I>GetFieldCount( )</I> method.</LI>
+	</UL>
+	</FONT>
+</LI>
+<BR/>
+<LI> DWORD GetFieldType( index )<BR/>
+	<FONT SIZE="+0">
+	<UL>
+		<LI>The implementation of this method must return the type of the field identified by the 0-based <I>index</I> argument.</LI>
+		<LI>This method is called as many times as the number of fields declared by the <I>GetFieldCount( )</I> method.</LI>
+		<LI>Fields can have one of four different types, whose values are defined in the <I>FieldType</I> enumeration:<BR/>
+			<PRE>
+enum FieldType
+{
+	Integer         =0,
+	Real            =1,
+	String          =2,
+	Timestamp       =3
+};
+			</PRE></LI>
+		<LI>It is possible for any field, regardless of the declared type, to return a <I>NULL</I> value.</LI>
+	</UL>
+	</FONT>
+</LI>
+<BR/>
+<LI> BOOL ReadRecord( )<BR/>
+	<FONT SIZE="+0">
+	<UL>
+		<LI>The implementation of this method should read a new &quot;record&quot; from its <I>from-entity</I>, thus advancing its internal state machine.</LI>
+		<LI>This method is called repeatedly until the object determines that there are no more &quot;records&quot; to export, in which case it must return <I>FALSE</I> causing Log Parser to call the <I>CloseInput</I> method.</LI>
+	</UL>
+	</FONT>
+</LI>
+<BR/>
+<LI> VARIANT GetValue( index )<BR/>
+	<FONT SIZE="+0">
+	<UL>
+		<LI>The implementation of this method must return the last record's value of the field identified by the 0-based <I>index</I> argument.</LI>
+		<LI>This method is called only for those fields that the user has specified in the SQL query; if the query is a &quot;<TT>SELECT COUNT(*)</TT>&quot; query, this method will never be called.</LI>
+		<LI>Values can be encoded in many different ways, as long as the <TT>VARIANT</TT> type can be casted onto the following <TT>VARTYPE</TT>'s according to the type declared for the field:<BR/>
+			<UL>
+				<LI><B>INTEGER</B>: <TT>VT_I8</TT></LI>
+				<LI><B>REAL</B>: <TT>VT_R8</TT></LI>
+				<LI><B>STRING</B>: <TT>VT_BSTR</TT></LI>
+				<LI><B>TIMESTAMP</B>: either a <TT>VT_DATE</TT>, or a <TT>VT_I8</TT> specifying the number of 100-nanosecond intervals since January 1, 1601 (UTC).</LI>
+			</UL>
+		</LI>
+		<LI><I>NULL</I> values can be encoded through either the <TT>VT_NULL</TT> or the <TT>VT_EMPTY</TT> <TT>VARTYPE</TT>'s.</LI>
+	</UL>
+	</FONT>
+</LI>
+<BR/>
+<LI> CloseInput( bAbort )<BR/>
+	<FONT SIZE="+0">
+	<UL>
+		<LI>The implementation of this method should release all the resources associated with the current execution.</LI>
+		<LI><I>bAbort</I> is <TT>TRUE</TT> when the execution has been terminated due to abnormal situations (e.g. the user pressed <TT>CTRL+C</TT>, or an error occurred).</LI>
+	</UL>
+	</FONT>
+</LI>
+</OL>
+
+<P>
+For example, if a COM object exports 3 <TT>STRING</TT> fields to Log Parser, the order of method calls would look as follows:
+
+<FONT SIZE="+0">
+<OL>
+<LI>OpenInput( szFromEntity )</LI>
+<LI>GetFieldCount( ) <I>//Returns 3</I></LI>
+<P>
+<LI>GetFieldName( 0 ) <I>//Returns &quot;field1&quot;</I></LI>
+<LI>GetFieldType( 0 ) <I>//Returns 2</I></LI>
+<LI>GetFieldName( 1 ) <I>//Returns &quot;field1&quot;</I></LI>
+<LI>GetFieldType( 1 ) <I>//Returns 2</I></LI>
+<LI>GetFieldName( 2 ) <I>//Returns &quot;field1&quot;</I></LI>
+<LI>GetFieldType( 2 ) <I>//Returns 2</I></LI>
+</P>
+
+<P>
+<LI>ReadRecord( ) <I>//Returns TRUE</I></LI>
+<LI>GetValue( 0 ) <I>//Returns a <TT>VT_BSTR VARIANT</TT></I></LI>
+<LI>GetValue( 1 ) <I>//Returns a <TT>VT_BSTR VARIANT</TT></I></LI>
+<LI>GetValue( 2 ) <I>//Returns a <TT>VT_BSTR VARIANT</TT></I></LI>
+</P>
+
+<P>
+<LI>ReadRecord( ) <I>//Returns TRUE</I></LI>
+<LI>GetValue( 0 ) <I>//Returns a <TT>VT_BSTR VARIANT</TT></I></LI>
+<LI>GetValue( 1 ) <I>//Returns a <TT>VT_BSTR VARIANT</TT></I></LI>
+<LI>GetValue( 2 ) <I>//Returns a <TT>VT_BSTR VARIANT</TT></I></LI>
+</P>
+
+<P>
+<LI>ReadRecord( ) <I>//Returns TRUE</I></LI>
+<LI>GetValue( 0 ) <I>//Returns a <TT>VT_BSTR VARIANT</TT></I></LI>
+<LI>GetValue( 1 ) <I>//Returns a <TT>VT_BSTR VARIANT</TT></I></LI>
+<LI>GetValue( 2 ) <I>//Returns a <TT>VT_BSTR VARIANT</TT></I></LI>
+</P>
+
+<P>
+<LI>ReadRecord( ) <I>//Returns TRUE</I></LI>
+<LI>GetValue( 0 ) <I>//Returns a <TT>VT_BSTR VARIANT</TT></I></LI>
+<LI>GetValue( 1 ) <I>//Returns a <TT>VT_BSTR VARIANT</TT></I></LI>
+<LI>GetValue( 2 ) <I>//Returns a <TT>VT_BSTR VARIANT</TT></I></LI>
+</P>
+
+<P>
+<LI>ReadRecord( ) <I>//Returns FALSE</I></LI>
+<LI>CloseInput( false )</LI>
+</P>
+
+</OL>
+</FONT>
+
+</P>	
+
+</FONT>
+
+</BODY>
+</HTML>

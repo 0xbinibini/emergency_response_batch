@@ -1,0 +1,60 @@
+-i:EVT 输入格式evt
+-o:DATAGRID(网格形式)输出呈现格式
+
+
+eventid=4648 sql语句
+logparser.exe -i:EVT -o:DATAGRID "select * from 安全日志.evtx where eventid=4648"
+extract_token(strings,0,'|')  as 使用者:安全id
+extract_token(strings,1,'|')  as 使用者:帐户名
+extract_token(strings,2,'|')  as 使用者:帐户域
+extract_token(strings,3,'|')  as 使用者:登录 ID
+extract_token(strings,4,'|')  as 使用者:登录 GUID
+
+extract_token(strings,5,'|')  as 凭据:帐户名
+extract_token(strings,6,'|')  as 凭据:帐户域
+extract_token(strings,7,'|')  as 凭据:登录 GUID
+
+extract_token(strings,8,'|')  as 目标服务器:名
+extract_token(strings,9,'|')  as 目标服务器:附加信息
+
+extract_token(strings,10,'|') as 进程信息:进程 ID
+extract_token(strings,11,'|') as 进程信息:进程名
+
+extract_token(strings,12,'|') as 网络信息:网络地址
+extract_token(strings,13,'|') as 网络信息:网络端口
+
+logparser.exe -i:EVT -o:DATAGRID "select timegenerated,extract_token(strings,0,'|')  as 使用者:安全id,extract_token(strings,1,'|') as 使用者:帐户名,extract_token(strings,2,'|')  as 使用者:帐户域,extract_token(strings,5,'|')  as 凭据:帐户名,extract_token(strings,6,'|')  as 凭据:帐户域,extract_token(strings,8,'|')  as 目标服务器:名,extract_token(strings,9,'|') as 目标服务器:附加信息,extract_token(strings,10,'|') as 进程信息:进程_ID,extract_token(strings,11,'|') as 进程信息:进程名,extract_token(strings,12,'|') as 网络信息:网络地址,extract_token(strings,13,'|') as 网络信息:网络端口 from 安全日志.evtx where eventid=4648"
+
+可选 TimeGenerated>'2021-09-07 00:00:00' and TimeGenerated<'2021-09-08 00:00:00'
+
+C:\Program Files (x86)\Log Parser 2.2\安全日志.evtx
+RecordNumber		442
+TimeGenerated		2020-06-26 09:15:14
+TimeWritten		2020-06-26 09:15:14
+EventID			4648
+EventType		8
+EventTypeName		Success Audit event
+EventCategory		12544
+
+EventCategoryName	The name for category 12544 in Source "Microsoft-Windows-Security-Auditing" cannot be found.The local computer may not have the necessary registry information or message DLL files to display messages from a remote computer
+
+
+SourceName		Microsoft-Windows-Security-Auditing
+Strings			S-1-5-18| SER20122$|WORKGROUP|0x3e7|{00000000-0000-0000-0000-000000000000}|DWM-1|Window Manager|{00000000-0000-0000-0000-000000000000}|localhost|localhost|0x214|C:\Windows\System32\winlogon.exe|-|-
+
+ComputerName 		SER20122
+SID			<NULL>
+Message			试图使用显式凭据登录。 
+使用者: 安全 ID: S-1-5-18 帐户名: SER20122$ 帐户域: WORKGROUP 登录 ID: 0x3e7 登录 GUID: {00000000-0000-0000-0000-000000000000} 
+
+使用了哪个帐户的凭据: 帐户名: DWM-1 帐户域: Window Manager 登录 GUID: {00000000-0000-0000-0000-000000000000} 
+
+目标服务器: 目标服务器名: localhost 附加信息: localhost 
+
+进程信息: 进程 ID: 0x214 进程名: C:\Windows\System32\winlogon.exe 
+
+网络信息: 网络地址: - 端口: - 在进程尝试通过显式指定帐户的凭据来登录该帐户时生成此事件。这通常发生在批量类型的配置中(例如计划任务) 或者使用 RUNAS 命令时。       			
+Data 			<NULL>
+
+
+                                    

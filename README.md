@@ -13,7 +13,7 @@
 
 * 当前用户 net user 、net localgroup wmic useraccount get name,sid、lusrmgr.msc、HKLM\SAM\SAM\Domains\Account\Users\Names(需要注册表SAM权限调整)
   * todo
-  * [ ] 添加插件:启动**D盾**工具直接查看是否有克隆账号
+  * [x] 添加插件:启动**D盾**工具直接查看是否有克隆账号
 
 3. 网络链接与进程 
 
@@ -26,7 +26,7 @@
 
 * msconfig、计划任务、计算机属性、ps显示计划任务、开始菜单自启动文件夹、bitsadmin自启动后门查看
   * todo
-  * [ ] 直接调用微软的autoruns来检查所有的自启动项
+  * [x] 直接调用微软的autoruns来检查所有的自启动项
 
 5. 注册表项
 
@@ -42,7 +42,10 @@
 
 * %windir%\System32\winevt\Logs\、打开日志管理器eventvwr.msc
   * todo
-  * [ ] 加入一些外部的日志分析工具 eg:logparser(微软)、event log explorer (可视化分析工具)、观星平台(一键上传分析)
+  * [ ] 加入一些外部的日志分析工具 eg:
+    * [x] logparser(微软)
+    * [ ] event log explorer (可视化分析工具)
+    * [ ] 观星平台(一键上传分析)
 
 8. 扩展名关联项后门查看
 
