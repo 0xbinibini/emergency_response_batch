@@ -10,27 +10,7 @@ goto UACPrompt
 exit /B
 
 :init
-if exist ..\tools\Ddun\D_Safe_Manage.exe (
-	echo 检测到存在D盾工具将会加载 && set Ddun=1
-) else (
-if exist ..\arichive2tools\Ddun\d_safe_*.zip (
-	echo 检测到存在D盾工具压缩包将为您解压 && set Ddun=1 && start cmd  /k "7zG.exe x "..\arichive2tools\Ddun\d_safe_2.1.6.1_0705.zip" -o"..\tools\Ddun""
-	)
-)
-if exist ..\tools\Autoruns\Autoruns.exe (
-	echo 检测到存在微软Autoruns工具将会加载 && set Autoruns=1
-) else (
-if exist ..\arichive2tools\Autoruns\*.zip (
-	echo 检测到存在微软Autoruns压缩包将为您解压 && set Autoruns=1 && start cmd  /k "7zG.exe x "..\arichive2tools\Autoruns\*.zip" -o"..\tools\Autoruns""
-	)
-)
-if exist ..\tools\Logparser\LogParser.exe (
-	echo 检测到存在Logparser工具将会加载 && set Logparser=1
-) else (
-if exist ..\arichive2tools\Logparser\*.zip (
-	echo 检测到存在Logparser压缩包将为您解压 && set Logparser=1 && start cmd  /k "7zG.exe x "..\arichive2tools\Autoruns\*.zip" -o"..\tools\Autoruns""
-	)
-)
+call init.bat
 rem pause
 goto loop
 
@@ -130,16 +110,19 @@ goto loop
 
 :7
 REM <----------------------------------日志分析----------------------------------->
-start %windir%\System32\winevt\Logs\
+rem start %windir%\System32\winevt\Logs\
 REM System.evtx系统日志 Application.evtx应用程序日志
 rem C:\Windows\System32\winevt\Logs目录下提取出以下文件
 rem Security.evtx 1102清除日志 
 rem system.evtx 104清除日志 7045服务已安装在系统中 7036运行或停止服务
 rem Microsoft-Windows-TerminalServices-LocalSessionManager%4Operational.evtx	24/25 1024
 rem Microsoft-Windows-TerminalServices-RemoteConnectionManager%4Operational.evtx rdp记录日志 1149
+if not exist evtx\%computername% (xcopy %windir%\System32\winevt\Logs\* evtx\%computername%\)
+rem start 
 start eventvwr.msc
 start powershell -noexit -command echo 获取传统日志;Get-EventLog;Get-WinEvent cmdlet
-if defined Logparser set /p comp=[输入您要分析的日志以主机名(hostname)为名称,all参数分析evtx文件夹下所有主机日志，默认分析本机日志] && start cmd /k "call .\evtx\parser.cmd !comp!"
+if defined Logparser set /p comp=[输入您要分析的日志以主机名(hostname)为名称,all参数分析evtx文件夹下所有主机日志，默认分析本机日志] & start cmd /k "call .\evtx\parser.cmd !comp!"
+rem cmd.exe
 goto loop
 :8
 rem assoc & ftype
@@ -154,20 +137,4 @@ goto loop
 
 REM 常用工具PChunter 、 autoruns 、 process explorer
 REM 勒索病毒判断网址 lesuobingdu.360.cn 黑客可以通过ProcessHacker工具结束掉一些防护进程
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

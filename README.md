@@ -51,7 +51,7 @@
 
 * assoc ; ftype txtfile & ftype exefile
 
-9. todo
+9. webshell检测 todo
    1. 基于流量
    2. 基于文件
    3. 基于日志
@@ -67,7 +67,7 @@
 1. 结束计划任务
 2. 终止服务项(一些EDR仍然没有很好的结束服务项造成权限维持)
 3. 杀死恶意进程
-4. 删除恶意文件恶意目录而已目录下的文件
+4. 删除恶意文件;恶意目录;恶意目录下的文件
 5. 删除注册表项(有时在成功结束上述项时注册表就自行删除了)
 
 现已定制的规则如下
@@ -82,7 +82,7 @@ ps:已实验的都是亲自拿虚拟机在本地用病毒样本运行过的
   * wannamine3.0
   * wannamine4.0(已实验)
 * 其他 远控僵尸网络木马等
-  * 3601(僵尸网络木马dll劫持利用)
+  * 3601(僵尸网络木马lpk.dll劫持利用)
 
 ![image-20210910142336418](./.assets/image-20210910142336418.png)
 
@@ -109,7 +109,7 @@ ps:已实验的都是亲自拿虚拟机在本地用病毒样本运行过的
 ![image-20210910161924862](.assets/image-20210910161924862.png)
 
 1. 禁止135 137 138 139 445(tcp) 137 138(UDP)端口 默认使用IPSEC安全策略 选择可以自行切换到使用wf.msc高级安全防火墙策略来完成封禁
-2. 业务需要或处理完成后打开封禁的端口
+2. 业务需要或处理完成后删除封禁策略从而打开封禁的端口
 3. 将安全策略文件导出到本地以便批量在其他电脑导入
 4. 导入3导出的安全策略
 
@@ -117,16 +117,23 @@ ps:已实验的都是亲自拿虚拟机在本地用病毒样本运行过的
 
 路径|说明
 ---|---
+arichive2tools:|存放一些指定的压缩工具的目录解压后默认会被释放到tools目录
+tools:|解压后的工具存放的位置
+**main:**|------------------------主程序目录-------------------------------
 <font color=blue>"$.debug"</font> 													|调试目录
 <font color=blue>".his"</font>|					 										历史文件夹
-<font color=red>"auto_temp.cmd"</font>			|					   	可直接自动运行某种类型的木马查杀批处理				
-"choice.exe"		|										为了兼容win2003的选择的命令行默认程序
-"forfiles.exe"				|						   	为了兼容win2003的遍历目录的命令行默认程序
-<font color=red>"killvir1.0.cmd"</font>		|							   	查杀功能批处理脚本
+<font color=blue>"evtx"</font>		| logparser分析批处理脚本存放 
 <font color=blue>"log"</font>		|												 	批处理运行时的所有日志记录
 <font color=blue>"vir"</font>			|											 	自定义查杀规则存放目录
-"wmicprocess.txt"					|		     	wmic process的所有列字段	
+<font color=red>"auto_temp.cmd"</font>			|					   	可直接自动运行某种类型的木马查杀批处理	
 <font color=red>"应急响应1.0.cmd"</font>	|								主功能批处理脚本
+<font color=red>"killvir1.0.cmd"</font>		|							   	查杀功能批处理脚本
+<font color=red>"choosetools.cmd"</font>		|							   	选择工具批处理脚本
 <font color=red>"隔离-一键关闭高危端口choice版.bat"</font>	|使用choice来实现选择式关闭高危端口的批处理
 <font color=red>"隔离-一键关闭高危端口set版-1.1.bat" </font>   |处理高危端口的批处理
+"choice.exe"		|										为了兼容win2003的选择的命令行默认程序
+"forfiles.exe"				|						   	为了兼容win2003的遍历目录的命令行默认程序
+"7zG.exe"				|						   	解压程序
+"7z.dll"				|						   	解压程序依赖的必要动态库文件
+"wmicprocess.txt"					|		     	wmic process的所有列字段	
 
