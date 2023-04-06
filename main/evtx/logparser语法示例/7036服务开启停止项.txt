@@ -1,0 +1,4 @@
+7045 服务第一次安装在系统中
+
+7036 服务的开启与停止
+logparser.exe -i:EVT -o:DATAGRID "select TimeGenerated,EXTRACT_TOKEN(Message,0,' 服务处于') as sv,EXTRACT_TOKEN(Message,1,'服务处于') from 2\system.evtx where eventid=7036 and EXTRACT_TOKEN(Message,0,' 服务处于')='Network Time Manager'"

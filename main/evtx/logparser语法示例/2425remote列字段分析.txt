@@ -1,0 +1,30 @@
+-i:EVT 输入格式evt
+-o:DATAGRID(网格形式)输出呈现格式
+
+
+eventid= sql语句
+logparser.exe -i:EVT -o:DATAGRID "select TimeGenerated,EventID,EventType,Strings,ComputerName,SID from remote.evtx where TimeGenerated>'2021-09-07 00:00:00' and TimeGenerated<'2021-09-08 00:00:00'"
+
+可额外附加的条件 eventid=24 or eventid=25
+
+
+G:\Program Files (x86)\Log Parser 2.2\remote.evtx
+RecordNumber		2638
+TimeGenerated		2021/9/7 16:01
+TimeWritten		2021/9/7 16:01
+EventID			261
+EventType		4
+EventTypeName		Information event
+EventCategory		0
+
+EventCategoryName		None
+
+
+SourceName		Microsoft-Windows-TerminalServices-RemoteConnectionManager
+Strings			RDP-Tcp
+
+ComputerName 		USER-20200925IG
+SID			S-1-5-20
+Message			The description for Event ID 261 in Source "Microsoft-Windows-TerminalServices-RemoteConnectionManager" cannot be found. The local computer may not have the necessary registry information or message DLL files to display messages from a remote computer 
+
+                                    

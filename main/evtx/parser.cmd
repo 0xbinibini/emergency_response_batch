@@ -22,7 +22,7 @@ if not exist !arg! echo 当前没有本机日志,请重新输入你要查询的主机日志文件夹 &&se
 if %arg%==all goto 2csv
 rem cmd.exe
 :istime
-set /p stamp=[请输入要查找的时间段 eg:2021-09-07 00:00:00 2021-09-08 00:00:00]
+set /p stamp=[请输入要查找的时间段 eg:2021-10-29 00:00:00 2021-10-30 00:00:00]
 if defined stamp (
 	for /f "tokens=1,2,3,4" %%i in ("%stamp%") do (
 		set sta=%%i %%j
@@ -41,9 +41,10 @@ rem Remote连接日志 Microsoft-Windows-TerminalServices-RemoteConnectionManager%4O
 	set /p eventid=[请输入事件ID号查询语句eg:eventid=24 or eventid=25]
 start 24-25.cmd
 rem 安全日志 Security.evtx 4624(登录成功) 4625(登录失败) 4648(明确凭据登录)
-	set /p lgtype=[请输入登录类型(常见类型3网络登录 10远程桌面登录)eg:3]
-	if defined lgtype set lgtype="and extract_token(strings,8,'|')='%lgtype%'" && set lgtype=!lgtype:"= !
+	set /p lgtypenum=[请输入登录类型(常见类型3网络登录 10远程桌面登录)eg:3]
+	if defined lgtypenum set lgtype="and extract_token(strings,8,'|')='%lgtypenum%'" && set lgtype=!lgtype:"= !
 start 4624.cmd
+	if defined lgtypenum set lgtype="and extract_token(strings,10,'|')='%lgtypenum%'" && set lgtype=!lgtype:"= !
 start 4625.cmd
 start 4648.cmd
 rem 系统日志 System.evtx 7036(服务开启或停止) 7045(服务被安装)

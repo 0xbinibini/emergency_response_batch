@@ -10,6 +10,7 @@ goto UACPrompt
 exit /B
 
 :init
+cd /d %~dp0
 call init.bat
 rem pause
 goto loop
@@ -37,7 +38,7 @@ echo 5: 查看关键注册表项
 echo 6: 查看敏感文件位置
 echo 7：打开事件日志
 echo 8: 关键文件拓展名关联命令
-echo 9: webshell检测(规划中)
+echo 9: webshell检测
 echo 0: 启动查杀批处理
 echo `: 选择第三方工具
 set /p input=[请选择不要输入诸如007哦]
@@ -48,7 +49,7 @@ echo 输入不合法重新输入
 goto loop
 )
 
-if %input% Leq 8 (
+if %input% Leq 9 (
 echo 小等8输入合法准备执行
 goto process
 ) else (
@@ -76,6 +77,7 @@ start cmd /k "tasklist /svc && echo 分析进程参数 & wmic process get caption,comm
 rem start cmd /k "tasklist /m xxx.dll"
 start cmd /k "netstat /anob"
 start powershell -noexit -command "Get-WmiObject Win32_Process | select Name,ProcessId,ParentProcessId,Path"
+start cmd /k "echo 本机曾远程连接过的ip地址: && reg query ^"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Terminal Server Client\Servers^" /s"
 goto loop
 :4
 REM <---------------------------启动项与任务计划程序等自启项----------------------------->
@@ -104,8 +106,8 @@ start %LOCALAPPDATA%
 start %APPDATA%
 
 echo 查看用户们最近打开的文件
-cd %UserProfile%\Recent  && start %UserProfile%\Recent && forfiles /m *.exe /d +2020/2/12 /s /p C:\ /c "cmd /c echo @path @fdate @ftime" 2>null
-dir %WINDIR%\Prefetch
+rem cd %UserProfile%\Recent  && start %UserProfile%\Recent && forfiles /m *.exe /d +2020/2/12 /s /p C:\ /c "cmd /c echo @path @fdate @ftime" 2>null
+start cmd /k "dir %WINDIR%\Prefetch"
 goto loop
 
 :7
@@ -125,14 +127,20 @@ if defined Logparser set /p comp=[输入您要分析的日志以主机名(hostname)为名称,all
 rem cmd.exe
 goto loop
 :8
-rem assoc & ftype
+rem start cmd /k "assoc & ftype"
 start cmd /k "ftype txtfile & ftype exefile"
 goto loop
 :9
 REM <----------------------------------Webshell检测----------------------------------->
-echo 基于流量
 echo 基于文件
+set /p web_dir=请输入需要检测的web系统目录:
+echo 当前目录:%web_dir%
+yara64.exe -r -C yara_rules\webshells.bin %web_dir%
+pause
+echo 基于流量
+
 echo 基于日志
+rem pause
 goto loop
 
 REM 常用工具PChunter 、 autoruns 、 process explorer

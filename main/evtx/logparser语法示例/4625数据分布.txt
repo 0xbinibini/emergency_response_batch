@@ -1,0 +1,69 @@
+-i:EVT 输入格式evt
+-o:DATAGRID(网格形式)输出呈现格式
+
+
+eventid=4624 sql语句
+logparser.exe -i:EVT -o:DATAGRID "select * from 安全日志.evtx where eventid=4624"
+extract_token(strings,0,'|')  as 使用者:安全id
+extract_token(strings,1,'|')  as 使用者:帐户名
+extract_token(strings,2,'|')  as 使用者:帐户域
+extract_token(strings,3,'|')  as 使用者:登录 ID
+extract_token(strings,8,'|')  as 失败原因
+
+extract_token(strings,4,'|')  as 新登录:安全ID
+extract_token(strings,5,'|')  as 新登录:帐户名
+extract_token(strings,6,'|')  as 新登录:帐户域
+extract_token(strings,7,'|')  as 状态:
+extract_token(strings,12,'|') as 身份验证数据包
+
+
+
+extract_token(strings,9,'|')   as 子状态
+extract_token(strings,10,'|') as 登录类型
+extract_token(strings,11,'|') as 登录进程
+
+
+extract_token(strings,13,'|') as 工作站名
+extract_token(strings,14,'|') as
+extract_token(strings,15,'|') as
+
+extract_token(strings,16,'|') as ？
+extract_token(strings,17,'|') as 调用方进程 ID
+
+extract_token(strings,18,'|') as 
+extract_token(strings,19,'|') as 源网络地址
+extract_token(strings,20,'|') as 源端口
+
+logparser.exe -i:EVT -o:DATAGRID "select timegenerated,extract_token(strings,1,'|') as 使用者:帐户名,extract_token(strings,3,'|')  as 使用者:登录_ID,extract_token(strings,8,'|')  as 失败原因,extract_token(strings,5,'|')  as 新登录:帐户名,extract_token(strings,6,'|')  as 新登录:帐户域,extract_token(strings,9,'|') as 子状态,extract_token(strings,10,'|') as 登录类型,extract_token(strings,11,'|') as 登录进程,extract_token(strings,13,'|') as 工作站名,extract_token(strings,17,'|') as 调用方进程id,extract_token(strings,19,'|') as 源网络地址,extract_token(strings,20,'|') as 源端口 from 安全日志.evtx where eventid=4625"
+
+
+可选的
+TimeGenerated>'2021-09-07 00:00:00' and TimeGenerated<'2021-09-08 00:00:00'
+and extract_token(strings,8,'|')='10'
+
+
+
+S-1-0-0|-|-|0x0|S-1-0-0|cloudbase|XXK-XUXI2|0xc000006d|%%2313|0xc0000064|3|NtLmSsp |NTLM|XXK-XUXI2|-|-|0|0x0|-|192.168.21.33|50414
+帐户登录失败。 使用者: 安全 ID: S-1-0-0 帐户名: - 帐户域: - 登录 ID: 0x0 登录类型: 3 登录失败的帐户: 安全 ID: S-1-0-0 帐户名: cloudbase 帐户域: XXK-XUXI2 失败信息: 失败原因: %%2313 状态: 0xc000006d 子状态: 0xc0000064 进程信息: 调用方进程 ID: 0x0 调用方进程名: - 网络信息: 工作站名: XXK-XUXI2 源网络地址: 192.168.21.33 源端口: 50414 详细身份验证信息: 登录进程: NtLmSsp 身份验证数据包: NTLM 传递服务: - 数据包名(仅限 NTLM): - 密钥长度: 0 登录请求失败时在尝试访问的计算机上生成此事件。 “使用者”字段指明本地系统上请求登录的帐户。这通常是一个服务(例如 Server 服务)或本地进程(例如 Winlogon.exe 或 Services.exe)。 “登录类型”字段指明发生的登录的种类。最常见的类型是 2 (交互式)和 3 (网络)。 “进程信息”字段表明系统上的哪个帐户和进程请求了登录。 “网络信息”字段指明远程登录请求来自哪里。“工作站名”并非总是可用，而且在某些情况下可能会留为空白。 “身份验证信息”字段提供关于此特定登录请求的详细信息。 -“传递服务”指明哪些直接服务参与了此登录请求。 -“数据包名”指明在 NTLM 协议之间使用了哪些子协议。 -“密钥长度”指明生成的会话密钥的长度。如果没有请求会话密钥，则此字段为 0。 
+
+使用者: 安全 ID: S-1-0-0 帐户名: - 帐户域: - 登录 ID: 0x0 登录类型: 3 模拟级别: %%1833 
+
+新登录: 安全 ID: S-1-5-7 帐户名: ANONYMOUS LOGON 帐户域: NT AUTHORITY 登录 ID: 0x689c1 登录 GUID: {00000000-0000-0000-0000-000000000000} 
+
+进程信息: 进程 ID: 0x0 进程名: - 
+
+网络信息: 工作站名: SER20122 源网络地址: fe80::2819:16f:327c:ad51 源端口: 1041 
+
+详细身份验证信息: 登录进程: NtLmSsp 身份验证数据包: NTLM  
+
+传递的服务: - 数据包名(仅限 NTLM): NTLM V1 密钥长度: 128 创建登录会话后，在被访问的计算机上生成此事件。 “使用者”字段指明本地系统上请求登录的帐户。这通常是一个服务(例如 Server 服务)或本地进程(例如 Winlogon.exe 或 Services.exe)。 “登录类型”字段指明发生的登录种类。最常见的类型是 2 (交互式)和 3 (网络)。 “新登录”字段指明新登录是为哪个帐户创建的，即登录的帐户。 “网络”字段指明远程登录请求来自哪里。“工作站名”并非总是可用，而且在某些情况下可能会留为空白。 模拟级别字段指明登录会话中的进程可以模拟的程度。 “身份验证信息”字段提供关于此特定登录请求的详细信息。 -“登录 GUID”是可用于将此事件与 KDC 事件关联起来的唯一标识符。 -“传递的服务”指明哪些中间服务参与了此登录请求。 - “数据包名”指明在 NTLM 协议之间使用了哪些子协议。 -“密钥长度”指明生成的会话密钥的长度。如果没有请求会话密钥，则此字段为 0。
+
+
+
+
+
+
+
+
+
+
